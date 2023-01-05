@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    MLS
+{% endblock %}
+
+{% block main %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Attempt</th>
+            <th>Bench</th>
+            <th>Reagent</th>
+            <th>Current lot</th>
+            <th>New lot</th>
+            <th>Comment</th>
+        </tr>
+    </thead>
+   <tbody>
+    {% for row in qc_db %}
+    <tr>
+        <td>{{ row.id }}</td>
+        <td>{{ row.attempt }}</td>
+        <td>{{ row.bench }}</td>
+        <td>{{ row.reagent }}</td>
+        <td>{{ row.currentlot }}</td>
+        <td>{{ row.newlot }}</td>
+        <td>{{ row.comment }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<form action="/upload" enctype="multipart/form-data" method="post">
+    <div class="mb-3">
+        <input type="file" name="file">
+    </div>
+    <div class="mb-3">
+        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="id" name="id" placeholder="Id" type="number">
+    </div>
+    <div class="mb-3">
+        <label for="QC'd">QC date:</label>
+        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="QC'd" name="QC'd" placeholder="QC date" type="date">
+    </div>
+    <div class="mb-3">
+        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="initials" name="initials" placeholder="Initials" type="text">
+    </div>
+    <div class="mb-3">
+        <select name="pass_fail">
+            <option disable selected>Pass or Fail</option>
+            {% for p in yea_nea %}
+                <option>{{ p }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="comment" name="comment" placeholder="Comment" type="text">
+    </div>
+    <button class="btn btn-primary" type="submit">Update QC Results</button>
+</form>
+{% endblock %}
