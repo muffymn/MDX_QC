@@ -3,3 +3,5 @@ psycopg2
 cs50
 Flask
 requests
+flask_Mail
+fpdf2
