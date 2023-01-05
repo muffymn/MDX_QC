@@ -1,0 +1,5 @@
+gunicorn
+psycopg2
+cs50
+Flask
+requests
