@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+
+<p>There are currently <b>{{x}}</b> QC waiting to be performed</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Bench</th>
+            <th>QC items</th>
+            <th>Pending since</th>
+        </tr>
+    </thead>
+<tbdody>
+{% for list in bench_count_list %}
+<tr>
+    {% for item in list %}
+        <td>{{ item }}</td>
+    {% endfor %}
+    <br>
+{% endfor %}
+</tr>
+</tbdody>
+</table>
+
+
+<p>There are currently <b>{{y}}</b> QC watiting to be reviewed</p>
+
+{% endblock %}

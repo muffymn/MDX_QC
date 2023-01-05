@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Review
+{% endblock %}
+
+{% block main %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Attempt</th>
+            <th>Reagent Name</th>
+            <th>PDF preview</th>
+        </tr>
+    </thead>
+   <tbody>
+    {% for row in review_db %}
+    <tr>
+        <td>{{ row.id }}</td>
+        <td>{{ row.attempt }}</td>
+        <td>{{ row.reagent }}</td>
+        <!-- <td>{{ row.pdf_path }}</td> -->
+        {% for pdf in pdf_list %}
+            {% if pdf in row.pdf_path %}
+        <td><a href="{{ url_for("serve_pdf", filename= pdf) }}" target="_blank">{{ url_for("serve_pdf", filename= pdf) }}</a></td>
+            {% endif %}
+        {% endfor %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<form action="/review" method="post">
+    <div class="mb-3">
+        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="id" name="id" placeholder="Id" type="number">
+    </div>
+    <div class="mb-3">
+        <label for="reviewed">Review date:</label>
+        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="reviewed" name="reviewed" placeholder="Date reviewed" type="date">
+    </div>
+    <div class="mb-3">
+        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="review_initials" name="review_initials" placeholder="Initials" type="text">
+    </div>
+    <div class="mb-3">
+        <select name="pass_fail2">
+            <option disable selected>Approve or Reject</option>
+            {% for p in yea_nea2 %}
+                <option>{{ p }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button class="btn btn-primary" type="submit">Finalize QC</button>
+</form>
+
+{% endblock %}

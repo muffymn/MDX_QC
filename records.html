@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Records
+{% endblock %}
+
+{% block main %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Status</th>
+            <th>Lot number</th>
+            <th>Reagent name</th>
+            <th>Review date</th>
+            <th>Final pdf</th>
+        </tr>
+    </thead>
+   <tbody>
+    {% for row in records_db %}
+    <tr>
+        <td>{{ row.id }}</td>
+        <td>{{ row.status }}</td>
+        <td>{{ row.newlot }}</td>
+        <td>{{ row.reagent }}</td>
+        <td>{{ row.review_date }}</td>
+        {% for pdf in final_pdf_list %}
+            {% if pdf in row.final_path %}
+        <td><a href="{{ url_for("serve_final_pdf", filename= pdf) }}" target="_blank">{{ url_for("serve_final_pdf", filename= pdf) }}</a></td>
+            {% endif %}
+        {% endfor %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
